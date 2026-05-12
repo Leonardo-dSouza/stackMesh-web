@@ -20,7 +20,6 @@ interface AuthStore {
   
   initializeFromStorage: () => void;
   refreshAccessToken: () => Promise<void>;
-  mockLogin: (email: string) => void;
 }
 
 export const useAuthStore = create<AuthStore>((set, get) => ({
@@ -107,20 +106,6 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       localStorage.removeItem('refreshToken');
       localStorage.removeItem('user');
     }
-  },
-
-  mockLogin: (email: string) => {
-    const { setTokens, setUser } = get();
-    const mockUser: User = {
-      id: '123',
-      email,
-      totalBytes: 107374182400, // 100GB
-    };
-    const mockAccessToken = 'mock_access_token_' + Date.now();
-    const mockRefreshToken = 'mock_refresh_token_' + Date.now();
-    
-    setTokens(mockAccessToken, mockRefreshToken);
-    setUser(mockUser);
   },
 
   initializeFromStorage: () => {

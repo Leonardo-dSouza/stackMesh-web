@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
+import { Cloud } from 'lucide-react';
 
 export function RegisterPage() {
   const [email, setEmail] = useState('');
@@ -8,19 +9,19 @@ export function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
-  const { register, isLoading, error, mockLogin } = useAuthStore();
+  const { register, isLoading, error } = useAuthStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setPasswordError('');
 
     if (password !== confirmPassword) {
-      setPasswordError('Passwords do not match');
+      setPasswordError('As senhas não coincidem');
       return;
     }
 
     if (password.length < 8) {
-      setPasswordError('Password must be at least 8 characters');
+      setPasswordError('A senha deve ter pelo menos 8 caracteres');
       return;
     }
 
@@ -32,125 +33,98 @@ export function RegisterPage() {
     }
   };
 
-  const handleDemoRegister = () => {
-    mockLogin(email || 'demo@stackmesh.com');
-    navigate('/dashboard');
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] px-4">
       <div className="w-full max-w-md">
         {/* Header */}
         <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">
-            <span className="material-symbols-outlined text-on-primary icon-fill text-3xl">
-              cloud_sync
-            </span>
-          </div>
-          <h1 className="text-headline-md font-headline-md text-primary dark:text-primary-fixed">
-            stackMesh
+          <Cloud className="text-[#0B5CBE]" size={48} />
+          <h1 className="text-4xl font-semibold text-[#0B3B7C] tracking-tight">
+            NexusDrive
           </h1>
         </div>
 
         {/* Form */}
-        <div className="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-sm">
-          <h2 className="text-title-sm font-title-sm text-on-surface mb-2">Create account</h2>
-          <p className="text-body-sm font-body-sm text-on-surface-variant mb-6">
-            Sign up to get started
+        <div className="bg-white border border-[#E2E8F0] rounded-xl p-8 shadow-sm">
+          <h2 className="text-xl font-bold text-[#1E293B] mb-2">Criar conta</h2>
+          <p className="text-sm text-[#64748B] mb-6">
+            Cadastre-se para começar
           </p>
 
           {error && (
-            <div className="mb-4 p-3 bg-error-container rounded-lg border border-error">
-              <p className="text-body-sm font-body-sm text-on-error-container">{error}</p>
+            <div className="mb-4 p-3 bg-[#FEF2F2] rounded-lg border border-[#F87171]">
+              <p className="text-sm text-[#B91C1C]">{error}</p>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {/* Email */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="email" className="text-label-caps font-label-caps text-on-surface">
-                Email
+              <label htmlFor="email" className="text-sm font-semibold text-[#1E293B]">
+                E-mail
               </label>
               <input
                 id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                className="px-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm font-body-sm focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all outline-none"
+                placeholder="voce@exemplo.com"
+                className="px-4 py-3 bg-white border border-[#E2E8F0] rounded-lg text-sm focus:border-[#0B5CBE] focus:ring-2 focus:ring-[#0B5CBE]/20 transition-all outline-none text-[#1E293B]"
                 required
               />
             </div>
 
             {/* Password */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="password" className="text-label-caps font-label-caps text-on-surface">
-                Password
+              <label htmlFor="password" className="text-sm font-semibold text-[#1E293B]">
+                Senha
               </label>
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Min. 8 characters"
-                className="px-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm font-body-sm focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all outline-none"
+                placeholder="Mínimo de 8 caracteres"
+                className="px-4 py-3 bg-white border border-[#E2E8F0] rounded-lg text-sm focus:border-[#0B5CBE] focus:ring-2 focus:ring-[#0B5CBE]/20 transition-all outline-none text-[#1E293B]"
                 required
               />
             </div>
 
             {/* Confirm Password */}
             <div className="flex flex-col gap-2">
-              <label htmlFor="confirmPassword" className="text-label-caps font-label-caps text-on-surface">
-                Confirm Password
+              <label htmlFor="confirmPassword" className="text-sm font-semibold text-[#1E293B]">
+                Confirmar Senha
               </label>
               <input
                 id="confirmPassword"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Confirm your password"
-                className="px-4 py-3 bg-surface-container-lowest border border-outline-variant rounded-lg text-body-sm font-body-sm focus:border-primary focus:ring-2 focus:ring-primary-fixed-dim transition-all outline-none"
+                placeholder="Confirme sua senha"
+                className="px-4 py-3 bg-white border border-[#E2E8F0] rounded-lg text-sm focus:border-[#0B5CBE] focus:ring-2 focus:ring-[#0B5CBE]/20 transition-all outline-none text-[#1E293B]"
                 required
               />
             </div>
 
             {passwordError && (
-              <p className="text-error text-body-sm font-body-sm">{passwordError}</p>
+              <p className="text-sm font-medium text-[#DC2626]">{passwordError}</p>
             )}
 
             {/* Submit */}
             <button
               type="submit"
               disabled={isLoading}
-              className="mt-4 bg-primary text-on-primary hover:bg-primary-fixed-variant disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg py-3 px-4 flex items-center justify-center gap-2 w-full font-title-sm text-title-sm shadow-sm"
+              className="mt-4 bg-[#0B5CBE] text-white hover:bg-[#094A9B] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-lg py-3 px-4 flex items-center justify-center gap-2 w-full font-semibold shadow-sm"
             >
-              {isLoading ? (
-                <>
-                  <span className="material-symbols-outlined animate-spin">
-                    progress_activity
-                  </span>
-                  Creating account...
-                </>
-              ) : (
-                'Sign Up'
-              )}
-            </button>
-
-            {/* Demo Register Button */}
-            <button
-              type="button"
-              onClick={handleDemoRegister}
-              className="mt-2 w-full bg-surface-container-low text-primary hover:bg-surface-container border border-outline-variant transition-colors rounded-lg py-2 px-4 font-title-sm text-title-sm"
-            >
-              Demo Sign Up
+              {isLoading ? 'Criando...' : 'Criar conta'}
             </button>
           </form>
 
           {/* Login Link */}
-          <p className="text-body-sm font-body-sm text-on-surface-variant text-center mt-6">
-            Already have an account?{' '}
-            <Link to="/login" className="text-primary hover:text-primary-fixed transition-colors font-semibold">
-              Sign in
+          <p className="text-sm text-[#64748B] text-center mt-6">
+            Já tem uma conta?{' '}
+            <Link to="/login" className="text-[#0B5CBE] hover:text-[#094A9B] transition-colors font-semibold">
+              Entrar
             </Link>
           </p>
         </div>

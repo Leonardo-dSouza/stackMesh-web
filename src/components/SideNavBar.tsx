@@ -13,8 +13,6 @@ export function SideNavBar() {
   const menuItems = [
     { label: 'Todos os Arquivos', icon: Folder, path: '/dashboard' },
     { label: 'Recentes', icon: Clock, path: '/recent' },
-    { label: 'Compartilhados', icon: Users, path: '/shared' },
-    { label: 'Lixeira', icon: Trash2, path: '/trash' },
   ];
 
   const storagePercent = 45; // Mock: 45GB de 100GB
