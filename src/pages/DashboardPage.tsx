@@ -48,7 +48,7 @@ export function DashboardPage() {
           <div className="flex items-center text-sm font-medium text-[#64748B]">
             <Home size={18} className="mr-2" />
             <span className="mx-1">/</span>
-            <span className="mx-1">NexusDrive</span>
+            <span className="mx-1">StackMesh</span>
             <span className="mx-1">/</span>
             <span className="text-[#1E293B] font-bold">Todos os Arquivos</span>
           </div>

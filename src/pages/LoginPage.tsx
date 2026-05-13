@@ -26,7 +26,7 @@ export function LoginPage() {
         <div className="flex items-center justify-center gap-3 mb-8">
           <Cloud className="text-[#0B5CBE]" size={48} />
           <h1 className="text-4xl font-semibold text-[#0B3B7C] tracking-tight">
-            NexusDrive
+            StackMesh
           </h1>
         </div>
 

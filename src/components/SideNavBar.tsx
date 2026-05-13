@@ -29,7 +29,7 @@ export function SideNavBar() {
         <Cloud className="text-primary" size={32} />
         <div>
           <h1 className="text-headline-sm font-semibold text-[#0B3B7C] tracking-tight m-0 leading-tight">
-            NexusDrive
+            StackMesh
           </h1>
           <p className="text-[0.7rem] font-medium text-on-surface-variant uppercase tracking-wider m-0 leading-tight">
             Armazenamento Nuvem
