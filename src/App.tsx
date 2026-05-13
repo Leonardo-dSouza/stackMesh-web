@@ -7,6 +7,7 @@ import { DashboardPage } from './pages/DashboardPage';
 import { RecentPage } from './pages/RecentPage';
 import { SharedPage } from './pages/SharedPage';
 import { TrashPage } from './pages/TrashPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import './index.css';
 
@@ -55,6 +56,14 @@ function App() {
           element={
             <ProtectedRoute>
               <TrashPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <SettingsPage />
             </ProtectedRoute>
           }
         />

@@ -1,12 +1,17 @@
-import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-import { Cloud, Folder, Clock, Users, Trash2, UploadCloud, Settings, LogOut } from 'lucide-react';
+import { useUserProfile } from '../hooks/useUserProfile';
+import { Cloud, Folder, Clock, UploadCloud, Settings, LogOut } from 'lucide-react';
 
-export function SideNavBar() {
+interface SideNavBarProps {
+  onUploadClick?: () => void;
+}
+
+export function SideNavBar({ onUploadClick }: SideNavBarProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useAuthStore();
+  const { user } = useUserProfile();
 
   const isActive = (path: string) => location.pathname === path;
 
@@ -15,7 +20,12 @@ export function SideNavBar() {
     { label: 'Recentes', icon: Clock, path: '/recent' },
   ];
 
-  const storagePercent = 45; // Mock: 45GB de 100GB
+  // Calculate storage percentage (1GB = 1,073,741,824 bytes)
+  const TOTAL_STORAGE_BYTES = BigInt(1_000_000_000 * 100); // 100 GB
+  const usedBytes = user?.totalBytes || BigInt(0);
+  const usedGb = Number(usedBytes) / (1024 * 1024 * 1024);
+  const totalGb = Number(TOTAL_STORAGE_BYTES) / (1024 * 1024 * 1024);
+  const storagePercent = Math.round((Number(usedBytes) / Number(TOTAL_STORAGE_BYTES)) * 100) || 0;
 
   const handleLogout = async () => {
     await logout();
@@ -38,7 +48,10 @@ export function SideNavBar() {
       </div>
 
       {/* Upload Button */}
-      <button className="bg-[#0B5CBE] text-white hover:bg-[#094A9B] transition-colors rounded-lg py-3 px-4 flex items-center justify-center gap-2 w-full font-semibold mb-2 shadow-sm font-body-sm">
+      <button
+        onClick={onUploadClick}
+        className="bg-[#0B5CBE] text-white hover:bg-[#094A9B] transition-colors rounded-lg py-3 px-4 flex items-center justify-center gap-2 w-full font-semibold mb-2 shadow-sm font-body-sm"
+      >
         <UploadCloud size={20} />
         Fazer Upload
       </button>
@@ -70,12 +83,14 @@ export function SideNavBar() {
           </div>
           <div className="w-full bg-[#E2E8F0] rounded-full h-1.5 mb-2 mt-3">
             <div
-              className="bg-[#0B5CBE] h-1.5 rounded-full transition-all"
-              style={{ width: `${storagePercent}%` }}
+              className={`h-1.5 rounded-full transition-all ${
+                storagePercent > 80 ? 'bg-red-500' : 'bg-[#0B5CBE]'
+              }`}
+              style={{ width: `${Math.min(storagePercent, 100)}%` }}
             ></div>
           </div>
           <span className="text-xs text-[#64748B] font-medium">
-            {storagePercent} GB de 100 GB usados
+            {usedGb.toFixed(2)} GB de {totalGb.toFixed(0)} GB usados
           </span>
         </div>
 
